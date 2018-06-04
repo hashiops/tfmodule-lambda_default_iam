@@ -21,7 +21,7 @@ this could work.
 https://www.terraform.io/docs/providers/aws/r/iam_role.html
 */
 resource "aws_iam_role" "iam_for_lambda" {
-  name = "iam_for_lambda"
+  name = "${var.environment}_iam_for_lambda_${var.application_name}"
   assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
