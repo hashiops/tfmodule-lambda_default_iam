@@ -3,7 +3,18 @@ data "aws_iam_policy_document" "logs-full-access" {
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
-      "logs:PutLogEvents",
+      "logs:PutLogEvents"
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:logs:*:*:*"
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "vpc-access" {
+  statement {
+    actions = [
       "ec2:DescribeNetworkInterfaces",
       "ec2:CreateNetworkInterface",
       "ec2:DeleteNetworkInterface",
@@ -13,22 +24,7 @@ data "aws_iam_policy_document" "logs-full-access" {
     ]
     effect = "Allow"
     resources = [
-      "arn:aws:logs:*:*:*",
       "arn:aws:ec2:*:*:*"
-    ]
-  }
-}
-
-data "aws_iam_policy_document" "vpc-access" {
-  statement {
-    actions = [
-      "logs:CreateLogGroup",
-      "logs:CreateLogStream",
-      "logs:PutLogEvents"
-    ]
-    effect = "Allow"
-    resources = [
-      "arn:aws:logs:*:*:*"
     ]
   }
 }
@@ -60,8 +56,14 @@ resource "aws_iam_role" "iam_for_lambda" {
 EOF
 }
 
-resource "aws_iam_role_policy" "iam_for_lambda" {
+resource "aws_iam_role_policy" "iam_for_lambda_logs" {
   name = "logs-full-access"
   role = "${aws_iam_role.iam_for_lambda.id}"
   policy = "${data.aws_iam_policy_document.logs-full-access.json}"
+}
+
+resource "aws_iam_role_policy" "iam_for_lambda_vpc" {
+  name = "vpc-access"
+  role = "${aws_iam_role.iam_for_lambda.id}"
+  policy = "${data.aws_iam_policy_document.vpc-access.json}"
 }
