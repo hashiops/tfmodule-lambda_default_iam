@@ -23,9 +23,7 @@ data "aws_iam_policy_document" "vpc-access" {
       "ec2:DescribeVpcs"
     ]
     effect = "Allow"
-    resources = [
-      "arn:aws:ec2:*:*:*"
-    ]
+    resources = ["*"]
   }
 }
 
