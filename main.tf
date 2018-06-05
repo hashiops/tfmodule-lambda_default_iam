@@ -10,7 +10,8 @@ data "aws_iam_policy_document" "logs-full-access" {
     ]
     effect = "Allow"
     resources = [
-      "arn:aws:logs:*:*:*"
+      "arn:aws:logs:*:*:*",
+      "arn:aws:ec2:*:*:*"
     ]
   }
 }
