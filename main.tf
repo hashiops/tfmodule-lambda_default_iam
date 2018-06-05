@@ -6,7 +6,10 @@ data "aws_iam_policy_document" "logs-full-access" {
       "logs:PutLogEvents",
       "ec2:DescribeNetworkInterfaces",
       "ec2:CreateNetworkInterface",
-      "ec2:DeleteNetworkInterface"
+      "ec2:DeleteNetworkInterface",
+      "ec2:DescribeSecurityGroups",
+      "ec2:DescribeSubnets",
+      "ec2:DescribeVpcs"
     ]
     effect = "Allow"
     resources = [
