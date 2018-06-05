@@ -3,6 +3,23 @@ data "aws_iam_policy_document" "logs-full-access" {
     actions = [
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
+      "logs:PutLogEvents",
+      "ec2:DescribeNetworkInterfaces",
+      "ec2:CreateNetworkInterface",
+      "ec2:DeleteNetworkInterface"
+    ]
+    effect = "Allow"
+    resources = [
+      "arn:aws:logs:*:*:*"
+    ]
+  }
+}
+
+data "aws_iam_policy_document" "vpc-access" {
+  statement {
+    actions = [
+      "logs:CreateLogGroup",
+      "logs:CreateLogStream",
       "logs:PutLogEvents"
     ]
     effect = "Allow"
